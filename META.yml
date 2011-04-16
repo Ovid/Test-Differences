@@ -1,0 +1,22 @@
+---
+name: Test-Differences
+version: 0.500
+author:
+  - 'Curtis "Ovid" Poe <ovid@cpan.org>'
+abstract: Test strings and data structures and show differences if not ok
+license: perl
+resources:
+  license: http://dev.perl.org/licenses/
+requires:
+  Test::More: 0
+  Text::Diff: 0.35
+configure_requires:
+  Module::Build: 0.35
+provides:
+  Test::Differences:
+    file: lib/Test/Differences.pm
+    version: 0.500
+generated_by: Module::Build version 0.35
+meta-spec:
+  url: http://module-build.sourceforge.net/META-spec-v1.4.html
+  version: 1.4
