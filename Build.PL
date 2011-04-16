@@ -13,6 +13,8 @@ my $builder = Module::Build->new(
         'Text::Diff' => 0.35,
     },
     add_to_cleanup      => [ 'Test-Differences-*' ],
+    meta_merge =>
+      { resources => { repository => 'https://github.com/Ovid/Test-Differences' } },
 );
 
 $builder->create_build_script();
