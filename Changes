@@ -1,5 +1,7 @@
 Changes file for Test::Differences
 
+0.61
+    - Unnumbered tests. There's no point to them.
 
 0.60 Sat April 16, 2011
     - Make '' and undef not equal. Thanks to Pavel Shaydo for the patch.
