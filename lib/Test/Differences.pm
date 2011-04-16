@@ -6,7 +6,7 @@ Test::Differences - Test strings and data structures and show differences if not
 
 =head1 VERSION
 
-.60
+0.61
 
 =head1 SYNOPSIS
 
@@ -162,6 +162,12 @@ a normal unified diff) or 25 lines.
 C<text> or C<data>. See C<eq_or_diff_text> and C<eq_or_diff_data> to
 understand this. You can usually ignore this.
 
+=item * C<Sortkeys>
+
+If passed, whatever value is added is used as the argument for L<Data::Dumper>
+Sortkeys option. See the L<Data::Dumper> docs to understand how you can
+control the Sortkeys behavior.
+
 =back
 
 =head1 DIFF STYLES
@@ -277,7 +283,7 @@ if you do this.
 
 =cut
 
-our $VERSION = "0.60"; # or "0.001_001" for a dev release
+our $VERSION = "0.61"; # or "0.001_001" for a dev release
 $VERSION = eval $VERSION;
 
 use Exporter;
@@ -470,11 +476,12 @@ sub eq_or_diff {
     if ($dump_it) {
         require Data::Dumper;
         local $Data::Dumper::Indent    = 1;
-        local $Data::Dumper::Sortkeys  = 1;
         local $Data::Dumper::Purity    = 0;
         local $Data::Dumper::Terse     = 1;
         local $Data::Dumper::Deepcopy  = 1;
         local $Data::Dumper::Quotekeys = 0;
+        local $Data::Dumper::Sortkeys =
+          exists $options->{Sortkeys} ? $options->{Sortkeys} : 1;
         ( $got, $expected ) = map
           [ split /^/, Data::Dumper::Dumper($_) ],
           @vals;

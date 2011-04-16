@@ -1,6 +1,8 @@
 Changes file for Test::Differences
 
-0.61
+0.61 Sat April 16, 2011
+    - Allow an option to override Sortkeys in C<eq_or_diff>. Thanks to Mark
+      Zealey for the suggestion.
     - Unnumbered tests. There's no point to them.
 
 0.60 Sat April 16, 2011
