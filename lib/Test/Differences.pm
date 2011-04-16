@@ -6,7 +6,7 @@ Test::Differences - Test strings and data structures and show differences if not
 
 =head1 VERSION
 
-.600
+.60
 
 =head1 SYNOPSIS
 
@@ -24,7 +24,7 @@ Test::Differences - Test strings and data structures and show differences if not
    use DBI;
 
    ... open connection & prepare statement and @expected_... here...
-   
+
    eq_or_diff $sth->fetchall_arrayref, \@expected_arrays  "testing DBI arrays";
    eq_or_diff $sth->fetchall_hashref,  \@expected_hashes, "testing DBI hashes";
 
@@ -175,9 +175,9 @@ You can run the following to understand the different diff output styles:
 
  use Test::More 'no_plan';
  use Test::Differences;
- 
+
  my $long_string = join '' => 1..40;
- 
+
  TODO: {
      local $TODO = 'Testing diff styles';
 
@@ -196,7 +196,7 @@ You can run the following to understand the different diff output styles:
      eq_or_diff $long_string, "-$long_string", 'oldstyle diff';
  }
 
-=head1 DEPLOYING 
+=head1 DEPLOYING
 
 There are several basic ways of deploying Test::Differences requiring more or less
 labor by you or your users.
@@ -271,9 +271,9 @@ $VERSION = eval $VERSION;
 use Exporter;
 
 @ISA    = qw( Exporter );
-@EXPORT = qw( 
-  eq_or_diff 
-  eq_or_diff_text 
+@EXPORT = qw(
+  eq_or_diff
+  eq_or_diff_text
   eq_or_diff_data
   unified_diff
   context_diff
@@ -584,17 +584,17 @@ while.  Note that the two hashes should report the same here:
 
     not ok 5
     #     Failed test (t/ctrl/05-home.t at line 51)
-    # +----+------------------------+----+------------------------+   
-    # | Elt|Got                     | Elt|Expected                |   
-    # +----+------------------------+----+------------------------+   
-    # |   0|{                       |   0|{                       |   
-    # |   1|  'password' => '',     |   1|  'password' => '',     |   
-    # *   2|  'method' => 'login',  *    |                        |   
-    # |   3|  'ctrl' => 'home',     |   2|  'ctrl' => 'home',     |   
-    # |    |                        *   3|  'method' => 'login',  *   
-    # |   4|  'email' => 'test'     |   4|  'email' => 'test'     |   
-    # |   5|}                       |   5|}                       |   
-    # +----+------------------------+----+------------------------+   
+    # +----+------------------------+----+------------------------+
+    # | Elt|Got                     | Elt|Expected                |
+    # +----+------------------------+----+------------------------+
+    # |   0|{                       |   0|{                       |
+    # |   1|  'password' => '',     |   1|  'password' => '',     |
+    # *   2|  'method' => 'login',  *    |                        |
+    # |   3|  'ctrl' => 'home',     |   2|  'ctrl' => 'home',     |
+    # |    |                        *   3|  'method' => 'login',  *
+    # |   4|  'email' => 'test'     |   4|  'email' => 'test'     |
+    # |   5|}                       |   5|}                       |
+    # +----+------------------------+----+------------------------+
 
 Data::Dumper also overlooks the difference between
 
