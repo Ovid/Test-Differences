@@ -10,6 +10,7 @@ t/01text_vs_data.t
 t/02pass.t
 t/03struct.t
 t/10test.t
+t/11undef.t
 t/99example.t
 t/diff_styles.t
 t/boilerplate.t

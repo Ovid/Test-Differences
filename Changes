@@ -1,5 +1,9 @@
 Changes file for Test::Differences
 
+
+0.60
+    - Make '' and undef not equal. Thanks to Pavel Shaydo for the patch.
+
 0.50 Sat Oct 17 15:18:03 2009
     - Production release.
 

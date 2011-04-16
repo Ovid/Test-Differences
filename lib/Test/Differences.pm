@@ -4,6 +4,10 @@ package Test::Differences;
 
 Test::Differences - Test strings and data structures and show differences if not ok
 
+=head1 VERSION
+
+.600
+
 =head1 SYNOPSIS
 
    use Test;    ## Or use Test::More
@@ -261,7 +265,7 @@ if you do this.
 
 =cut
 
-our $VERSION = "0.500"; # or "0.001_001" for a dev release
+our $VERSION = "0.60"; # or "0.001_001" for a dev release
 $VERSION = eval $VERSION;
 
 use Exporter;
@@ -340,7 +344,7 @@ sub _flatten {
     my $type = shift;
     local $_ = shift if @_;
 
-    return [ split /^/m ] unless ref;
+    return [ split /^/m, _quote_str($_) ] unless ref;
 
     croak "Can't flatten $_" unless $type;
 
@@ -355,7 +359,10 @@ sub _flatten {
     else {
         die "unsupported ref type";
     }
-    if ( $type eq ARRAY_of_ARRAYs_of_scalars ) {
+    if ( $type eq ARRAY_of_scalars) {
+        @recs = map { _quote_str($_) } @recs;
+    }
+    elsif ( $type eq ARRAY_of_ARRAYs_of_scalars ) {
         ## Also copy the inner arrays if need be
         $_ = [@$_] for @recs;
     }
@@ -382,16 +389,24 @@ sub _flatten {
     }
 
     if ( $type eq ARRAY_of_ARRAYs_of_scalars ) {
-        ## Convert undefs
+        ## Quote strings
         for my $rec (@recs) {
             for (@$rec) {
-                $_ = "<undef>" unless defined;
+                $_ = _quote_str($_);
             }
             $rec = join ",", @$rec;
         }
     }
 
     return \@recs;
+}
+
+sub _quote_str {
+    my $str = shift;
+    return 'undef' unless defined $str;
+    return $str if $str =~ /^[0-9]+$/;
+    $str =~ s{([\\\'])}{\\$1}g;
+    return "'$str'";
 }
 
 sub _identify_callers_test_package_of_choice {
