@@ -15,6 +15,7 @@ provides:
     file: lib/Test/Differences.pm
     version: 0.60
 requires:
+  Data::Dumper: 2.126
   Test::More: 0
   Text::Diff: 0.35
 resources:
