@@ -3,6 +3,9 @@ Changes file for Test::Differences
 
 0.60
     - Make '' and undef not equal. Thanks to Pavel Shaydo for the patch.
+    - Made Data::Dumper minimum version 2.126 to resolve
+      https://rt.cpan.org/Ticket/Display.html?id=60798. Thanks to
+      jjnapiork@cpan.org  for the report and fix.
 
 0.50 Sat Oct 17 15:18:03 2009
     - Production release.
