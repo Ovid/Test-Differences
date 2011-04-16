@@ -143,14 +143,26 @@ YMMV.
 
 =head1 OPTIONS
 
-There is currently only one option: "context".  This allows you to
-control the amount of context shown:
+The options to C<eq_or_diff> give some fine-grained control over the output.
+
+=over 4
+
+=item * C<context>
+
+This allows you to control the amount of context shown:
 
    eq_or_diff $got, $expected, $name, { context => 50000 };
 
 will show you lots and lots of context.  Normally, eq_or_diff() uses
 some heuristics to determine whether to show 3 lines of context (like
 a normal unified diff) or 25 lines.
+
+=item * C<data_type>
+
+C<text> or C<data>. See C<eq_or_diff_text> and C<eq_or_diff_data> to
+understand this. You can usually ignore this.
+
+=back
 
 =head1 DIFF STYLES
 
