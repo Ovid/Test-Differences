@@ -6,7 +6,7 @@ Test::Differences - Test strings and data structures and show differences if not
 
 =head1 VERSION
 
-0.61
+0.62
 
 =head1 SYNOPSIS
 
@@ -214,6 +214,70 @@ You can run the following to understand the different diff output styles:
      eq_or_diff $long_string, "-$long_string", 'oldstyle diff';
  }
 
+=head1 UNICODE
+
+Generally you'll find that the following test output is disappointing.
+
+    use Test::Differences;
+
+    my $want = { 'Traditional Chinese' => '中國' };
+    my $have = { 'Traditional Chinese' => '中国' };
+
+    eq_or_diff $have, $want, 'Unicode, baby';
+
+The output looks like this:
+
+    #   Failed test 'Unicode, baby'
+    #   at t/unicode.t line 12.
+    # +----+----------------------------+----------------------------+
+    # | Elt|Got                         |Expected                    |
+    # +----+----------------------------+----------------------------+
+    # |   0|'Traditional Chinese'       |'Traditional Chinese'       |
+    # *   1|'\xe4\xb8\xad\xe5\x9b\xbd'  |'\xe4\xb8\xad\xe5\x9c\x8b'  *
+    # +----+----------------------------+----------------------------+
+    # Looks like you failed 1 test of 1.
+    Dubious, test returned 1 (wstat 256, 0x100)
+
+This is generally not helpful and someone points out that you didn't declare
+your test program as being utf8, so you do that:
+
+    use Test::Differences;
+    use utf8;
+
+    my $want = { 'Traditional Chinese' => '中國' };
+    my $have = { 'Traditional Chinese' => '中国' };
+
+    eq_or_diff $have, $want, 'Unicode, baby';
+
+
+Here's what you get:
+
+    #   Failed test 'Unicode, baby'
+    #   at t/unicode.t line 12.
+    # +----+-----------------------+-----------------------+
+    # | Elt|Got                    |Expected               |
+    # +----+-----------------------+-----------------------+
+    # |   0|'Traditional Chinese'  |'Traditional Chinese'  |
+    # *   1|'\x{4e2d}\x{56fd}'     |'\x{4e2d}\x{570b}'     *
+    # +----+-----------------------+-----------------------+
+    # Looks like you failed 1 test of 1.
+    Dubious, test returned 1 (wstat 256, 0x100)
+    Failed 1/1 subtests
+
+That's better, but still awful. However, if you have C<Text::Diff> 0.40 or
+higher installed, you can add this to your code:
+
+    BEGIN { $ENV{DIFF_OUTPUT_UNICODE} = 1 }
+
+Make sure you do this I<before> you load L<Text::Diff>. Then this is the output:
+
+    # +----+-----------------------+-----------------------+
+    # | Elt|Got                    |Expected               |
+    # +----+-----------------------+-----------------------+
+    # |   0|'Traditional Chinese'  |'Traditional Chinese'  |
+    # *   1|'中国'                 |'中國'                 *
+    # +----+-----------------------+-----------------------+
+
 =head1 DEPLOYING
 
 There are several basic ways of deploying Test::Differences requiring more or less
@@ -283,7 +347,7 @@ if you do this.
 
 =cut
 
-our $VERSION = "0.61"; # or "0.001_001" for a dev release
+our $VERSION = "0.62"; # or "0.001_001" for a dev release
 $VERSION = eval $VERSION;
 
 use Exporter;
