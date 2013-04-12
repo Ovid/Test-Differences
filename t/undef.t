@@ -17,6 +17,14 @@ TODO: {
 }
 
 my $builder = Test::More->builder;
-eq_or_diff [ map { $_->{actual_ok} } $builder->details ], [ map { 0 } $builder->details ],
-  "All TODO tests failed";
-
+# The Test::Builder 1.5 way to do it
+if ( $builder->can('history') ) {
+    is $builder->history->pass_count - $builder->history->todo_count,
+       $builder->history->literal_pass_count,
+       "All TODO tests failed";
+}
+# The Test::Builder 0.x way to do it
+else {
+    eq_or_diff [ map { $_->{actual_ok} } $builder->details ], [ map { 0 } $builder->details ],
+      "All TODO tests failed";
+}
