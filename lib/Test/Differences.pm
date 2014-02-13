@@ -168,6 +168,10 @@ If passed, whatever value is added is used as the argument for L<Data::Dumper>
 Sortkeys option. See the L<Data::Dumper> docs to understand how you can
 control the Sortkeys behavior.
 
+=item * C<filename_a> and C<filename_b>
+
+The column headers to use in the output. They default to 'Got' and 'Expected'.
+
 =back
 
 =head1 DIFF STYLES
@@ -525,10 +529,17 @@ sub eq_or_diff {
     $options = pop if @_ > 2 && ref $_[-1];
     ( $vals[0], $vals[1], $name ) = @_;
 
-    my $data_type;
-    $data_type = $options->{data_type} if $options;
+    my($data_type, $filename_a, $filename_b);
+    if($options) {
+        $data_type  = $options->{data_type};
+        $filename_a = $options->{filename_a};
+        $filename_b = $options->{filename_b};
+    }
     $data_type ||= "text" unless ref $vals[0] || ref $vals[1];
     $data_type ||= "data";
+
+    $filename_a ||= 'Got';
+    $filename_b ||= 'Expected';
 
     my @widths;
 
@@ -578,8 +589,8 @@ sub eq_or_diff {
         $diff = diff $got, $expected,
           { CONTEXT     => $context,
             STYLE       => _diff_style(),
-            FILENAME_A  => "Got",
-            FILENAME_B  => "Expected",
+            FILENAME_A  => $filename_a,
+            FILENAME_B  => $filename_b,
             OFFSET_A    => $data_type eq "text" ? 1 : 0,
             OFFSET_B    => $data_type eq "text" ? 1 : 0,
             INDEX_LABEL => $data_type eq "text" ? "Ln" : "Elt",
