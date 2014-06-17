@@ -709,13 +709,13 @@ Yves Orton <demerphq@hotmail.com>.  The plan to address this is to allow
 you to select Data::Denter or some other module of your choice as an
 option.
 
-=head1 AUTHOR
+=head1 AUTHORS
 
-    Barrie Slaymaker <barries@slaysys.com>
-
-=head1 MAINTAINER
+    Barrie Slaymaker <barries@slaysys.com> - original author
 
     Curtis "Ovid" Poe <ovid@cpan.org>
+
+    David Cantrell <david@cantrell.org.uk>
 
 =head1 LICENSE
 

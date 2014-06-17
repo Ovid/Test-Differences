@@ -2,6 +2,7 @@ Changes file for Test::Differences
 
 0.62
     - Document the Text::Diff unicode fix.
+    - Add ability to customise 'Got' and 'Expected' column headers
 
 0.61 Sat April 16, 2011
     - Allow an option to override Sortkeys in C<eq_or_diff>. Thanks to Mark
