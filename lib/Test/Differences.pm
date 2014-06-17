@@ -1,5 +1,7 @@
 package Test::Differences;
 
+=encoding utf8
+
 =head1 NAME
 
 Test::Differences - Test strings and data structures and show differences if not ok
