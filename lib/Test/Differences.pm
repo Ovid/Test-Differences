@@ -8,7 +8,7 @@ Test::Differences - Test strings and data structures and show differences if not
 
 =head1 VERSION
 
-0.61_01
+0.62
 
 =head1 SYNOPSIS
 
@@ -353,7 +353,7 @@ if you do this.
 
 =cut
 
-our $VERSION = "0.61_01"; # or "0.001_001" for a dev release
+our $VERSION = "0.62"; # or "0.001_001" for a dev release
 $VERSION = eval $VERSION;
 
 use Exporter;
