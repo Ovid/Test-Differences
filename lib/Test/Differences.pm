@@ -671,10 +671,10 @@ with unicode strings.
 =head2 C<Data::Dumper> and older Perls.
 
 Relies on Data::Dumper (for now), which, prior to perl5.8, will not always
-report hashes in the same order.  C< $Data::Dumper::SortKeys > I<is> set to 1,
+report hashes in the same order.  C< $Data::Dumper::Sortkeys > I<is> set to 1,
 so on more recent versions of Data::Dumper, this should not occur.  Check CPAN
 to see if it's been peeled out of the main perl distribution and backported.
-Reported by Ilya Martynov <ilya@martynov.org>, although the SortKeys "future
+Reported by Ilya Martynov <ilya@martynov.org>, although the Sortkeys "future
 perfect" workaround has been set in anticipation of a new Data::Dumper for a
 while.  Note that the two hashes should report the same here:
 
