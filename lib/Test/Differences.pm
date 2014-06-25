@@ -134,9 +134,9 @@ somebody or I get some free time.
 C<eq_or_diff()> starts counting records at 0 unless you pass it two text
 strings:
 
-   eq_or_diff $a, $b;   ## First line is line number 1
-   eq_or_diff @a, @b;   ## First element is element 0
-   eq_or_diff $a, @b;   ## First line/element is element 0
+   eq_or_diff $a,   $b;   ## First line is line number 1
+   eq_or_diff \@a, \@b;   ## First element is element 0
+   eq_or_diff $a,  \@b;   ## First line/element is element 0
 
 If you want to force a first record number of 0, use C<eq_or_diff_data>.  If
 you want to force a first record number of 1, use C<eq_or_diff_text>.  I chose
