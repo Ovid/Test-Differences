@@ -373,6 +373,7 @@ use strict;
 
 use Carp;
 use Text::Diff;
+use  Data::Dumper;
 
 sub _isnt_ARRAY_of_scalars {
     return 1 if ref ne "ARRAY";
@@ -547,28 +548,16 @@ sub eq_or_diff {
 
     my @types = map _grok_type, @vals;
 
-    my $dump_it = !$types[0] || !$types[1];
-
-    my ( $got, $expected );
-    if ($dump_it) {
-        require Data::Dumper;
-        local $Data::Dumper::Indent    = 1;
-        local $Data::Dumper::Purity    = 0;
-        local $Data::Dumper::Terse     = 1;
-        local $Data::Dumper::Deepcopy  = 1;
-        local $Data::Dumper::Quotekeys = 0;
-        local $Data::Dumper::Sortkeys =
-          exists $options->{Sortkeys} ? $options->{Sortkeys} : 1;
-        ( $got, $expected ) = map
-          [ split /^/, Data::Dumper::Dumper($_) ],
-          @vals;
-    }
-    else {
-        ( $got, $expected ) = (
-            _flatten( $types[0], $vals[0] ),
-            _flatten( $types[1], $vals[1] )
-        );
-    }
+    local $Data::Dumper::Indent    = 1;
+    local $Data::Dumper::Purity    = 0;
+    local $Data::Dumper::Terse     = 1;
+    local $Data::Dumper::Deepcopy  = 1;
+    local $Data::Dumper::Quotekeys = 0;
+    local $Data::Dumper::Sortkeys =
+        exists $options->{Sortkeys} ? $options->{Sortkeys} : 1;
+    my ( $got, $expected ) = map
+        [ split /^/, Data::Dumper::Dumper($_) ],
+        @vals;
 
     my $caller = caller;
 
@@ -582,8 +571,7 @@ sub eq_or_diff {
         $context = $options->{context}
           if exists $options->{context};
 
-        $context = $dump_it ? 2**31 : grep( @$_ > 25, $got, $expected ) ? 3 : 25
-          unless defined $context;
+        $context = 2**31 unless defined $context;
 
         confess "context must be an integer: '$context'\n"
           unless $context =~ /\A\d+\z/;
