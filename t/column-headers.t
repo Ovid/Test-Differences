@@ -17,12 +17,13 @@ is(
 "
 #   Failed test 'both the same'
 #   at t/script/default-headers line 8.
-# +----+-------+----------+
-# | Elt|Got    |Expected  |
-# +----+-------+----------+
-# |   0|'foo'  |'foo'     |
-# *   1|'bar'  |'baz'     *
-# +----+-------+----------+
+# +----+----------------+----------------+
+# | Elt|Got             |Expected        |
+# +----+----------------+----------------+
+# |   0|{               |{               |
+# *   1|  foo => 'bar'  |  foo => 'baz'  *
+# |   2|}               |}               |
+# +----+----------------+----------------+
 # Looks like you failed 1 test of 1.
 ",
     "got expected error output"
@@ -38,12 +39,13 @@ is(
 "
 #   Failed test 'both the same'
 #   at t/script/custom-headers line 8.
-# +----+-------+-------+
-# | Elt|Lard   |Chips  |
-# +----+-------+-------+
-# |   0|'foo'  |'foo'  |
-# *   1|'bar'  |'baz'  *
-# +----+-------+-------+
+# +----+----------------+----------------+
+# | Elt|Lard            |Chips           |
+# +----+----------------+----------------+
+# |   0|{               |{               |
+# *   1|  foo => 'bar'  |  foo => 'baz'  *
+# |   2|}               |}               |
+# +----+----------------+----------------+
 # Looks like you failed 1 test of 1.
 ",
     "got expected error output"
