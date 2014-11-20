@@ -112,37 +112,6 @@ is designed to be used with Test.pm and with Test::Simple, Test::More,
 and other Test::Builder based testing modules.  As the SYNOPSIS shows,
 another testing module must be used as the basis for your test suite.
 
-These functions assume that you are presenting it with "flat" records,
-looking like:
-
-   - scalars composed of record-per-line
-   - arrays of scalars,
-   - arrays of arrays of scalars,
-   - arrays of hashes containing only scalars
-
-All of these are flattened in to single strings which are then compared
-for differences.  Differently data structures can be compared, as long
-as they flatten identically.
-
-All other data structures are run through Data::Dumper first.  This is a
-bit dangerous, as some versions of perl shipped with Data::Dumpers that
-could do the oddest things with unexpected, like core dump.  Only as of
-5.8.0 does Data::Dumper sort hash keys, which is necessary for HASH
-dumps to be fully predictable.  This will be changed when this bites
-somebody or I get some free time.
-
-C<eq_or_diff()> starts counting records at 0 unless you pass it two text
-strings:
-
-   eq_or_diff $a,   $b;   ## First line is line number 1
-   eq_or_diff \@a, \@b;   ## First element is element 0
-   eq_or_diff $a,  \@b;   ## First line/element is element 0
-
-If you want to force a first record number of 0, use C<eq_or_diff_data>.  If
-you want to force a first record number of 1, use C<eq_or_diff_text>.  I chose
-this over passing in an options hash because it's clearer and simpler this way.
-YMMV.
-
 =head1 OPTIONS
 
 The options to C<eq_or_diff> give some fine-grained control over the output.
@@ -375,21 +344,6 @@ use Carp;
 use Text::Diff;
 use  Data::Dumper;
 
-sub _isnt_ARRAY_of_scalars {
-    return 1 if ref ne "ARRAY";
-    return scalar grep ref, @$_;
-}
-
-sub _isnt_HASH_of_scalars {
-    return 1 if ref ne "HASH";
-    return scalar grep ref, values %$_;
-}
-
-use constant ARRAY_of_scalars           => "ARRAY of scalars";
-use constant ARRAY_of_ARRAYs_of_scalars => "ARRAY of ARRAYs of scalars";
-use constant ARRAY_of_HASHes_of_scalars => "ARRAY of HASHes of scalars";
-use constant HASH_of_scalars            => "HASH of scalars";
-
 {
     my $diff_style = 'Table';
     my %allowed_style = map { $_ => 1 } qw/Unified Context OldStyle Table/;
@@ -407,96 +361,6 @@ sub unified_diff  { _diff_style('Unified') }
 sub context_diff  { _diff_style('Context') }
 sub oldstyle_diff { _diff_style('OldStyle') }
 sub table_diff    { _diff_style('Table') }
-
-sub _grok_type {
-    local $_ = shift if @_;
-    return "SCALAR" unless ref;
-    if ( ref eq "ARRAY" ) {
-        return undef unless @$_;
-        return ARRAY_of_scalars
-          unless _isnt_ARRAY_of_scalars;
-        return ARRAY_of_ARRAYs_of_scalars
-          unless grep _isnt_ARRAY_of_scalars, @$_;
-        return ARRAY_of_HASHes_of_scalars
-          unless grep _isnt_HASH_of_scalars, @$_;
-        return 0;
-    }
-    elsif ( ref eq 'HASH' ) {
-        return HASH_of_scalars
-          unless _isnt_HASH_of_scalars($_);
-        return 0;
-    }
-}
-
-## Flatten any acceptable data structure in to an array of lines.
-sub _flatten {
-    my $type = shift;
-    local $_ = shift if @_;
-
-    return [ split /^/m, _quote_str($_) ] unless ref;
-
-    croak "Can't flatten $_" unless $type;
-
-    ## Copy the top level array so we don't trash the originals
-    my ( @recs, %hash_copy );
-    if ( ref $_ eq 'ARRAY' ) {
-        @recs = @$_;
-    }
-    elsif ( ref $_ eq 'HASH' ) {
-        %hash_copy = %$_;
-    }
-    else {
-        die "unsupported ref type";
-    }
-    if ( $type eq ARRAY_of_scalars) {
-        @recs = map { _quote_str($_) } @recs;
-    }
-    elsif ( $type eq ARRAY_of_ARRAYs_of_scalars ) {
-        ## Also copy the inner arrays if need be
-        $_ = [@$_] for @recs;
-    }
-    elsif ( $type eq ARRAY_of_HASHes_of_scalars ) {
-        my %headings;
-        for my $rec (@recs) {
-            $headings{$_} = 1 for keys %$rec;
-        }
-        my @headings = sort keys %headings;
-
-        ## Convert all hashes in to arrays.
-        for my $rec (@recs) {
-            $rec = [ map $rec->{$_}, @headings ],;
-        }
-
-        unshift @recs, \@headings;
-
-        $type = ARRAY_of_ARRAYs_of_scalars;
-    }
-    elsif ( $type eq HASH_of_scalars ) {
-        my @headings = sort keys %hash_copy;
-        @recs = ( \@headings, [ map $hash_copy{$_}, @headings ] );
-        $type = ARRAY_of_ARRAYs_of_scalars;
-    }
-
-    if ( $type eq ARRAY_of_ARRAYs_of_scalars ) {
-        ## Quote strings
-        for my $rec (@recs) {
-            for (@$rec) {
-                $_ = _quote_str($_);
-            }
-            $rec = join ",", @$rec;
-        }
-    }
-
-    return \@recs;
-}
-
-sub _quote_str {
-    my $str = shift;
-    return 'undef' unless defined $str;
-    return $str if $str =~ /^[0-9]+$/;
-    $str =~ s{([\\\'])}{\\$1}g;
-    return "'$str'";
-}
 
 sub _identify_callers_test_package_of_choice {
     ## This is called at each test in case Test::Differences was used before
@@ -545,8 +409,6 @@ sub eq_or_diff {
     $filename_b ||= 'Expected';
 
     my @widths;
-
-    my @types = map _grok_type, @vals;
 
     local $Data::Dumper::Indent    = 1;
     local $Data::Dumper::Purity    = 0;

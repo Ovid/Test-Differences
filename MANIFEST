@@ -5,7 +5,6 @@ Makefile.PL
 MANIFEST
 README
 t/00-load.t
-t/flatten.t
 t/text_vs_data.t
 t/pass.t
 t/struct.t
