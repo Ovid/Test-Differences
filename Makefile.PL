@@ -23,7 +23,15 @@ WriteMakefile(
     dist       => { COMPRESS => 'gzip -9f', SUFFIX => 'gz', },
     clean      => { FILES    => 'Test-Differences-*' },
     META_MERGE => {
-        resources =>
-          { repository => 'https://github.com/Ovid/Test-Differences' }
+        resources => {
+            repository => {
+                type => 'git',
+                url  => 'https://github.com/Ovid/Test-Differences.git',
+                web  => 'https://github.com/Ovid/Test-Differences',
+            },
+            bugtracker => {
+                web => 'https://github.com/Ovid/Test-Differences/issues',
+            },
+        },
     },
 );
