@@ -1,6 +1,6 @@
 Changes file for Test::Differences
 
-X.XX XXX XXXX XX, XXXX
+0.63 Thu November 20, 2014
     - Minor doco-fixes
     - Remove use of flatten, always use Data::Dumper for saner, more readable
       output, fixes RT #95446 (David Precious (bigpresh))
