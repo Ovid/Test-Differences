@@ -553,6 +553,7 @@ sub eq_or_diff {
     local $Data::Dumper::Terse     = 1;
     local $Data::Dumper::Deepcopy  = 1;
     local $Data::Dumper::Quotekeys = 0;
+    local $Data::Dumper::Useperl   = 1;
     local $Data::Dumper::Sortkeys =
         exists $options->{Sortkeys} ? $options->{Sortkeys} : 1;
     my ( $got, $expected ) = map
