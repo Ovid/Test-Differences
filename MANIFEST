@@ -20,3 +20,4 @@ META.yml                                 Module meta-data (added by MakeMaker)
 t/column-headers.t
 t/script/custom-headers
 t/script/default-headers
+MANIFEST.SKIP
