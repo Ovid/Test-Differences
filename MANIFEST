@@ -16,7 +16,6 @@ t/boilerplate.t
 t/pod-coverage.t
 t/pod.t
 t/regression.t
-META.yml                                 Module meta-data (added by MakeMaker)
 t/column-headers.t
 t/script/custom-headers
 t/script/default-headers
