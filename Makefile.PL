@@ -24,14 +24,8 @@ WriteMakefile(
     clean      => { FILES    => 'Test-Differences-*' },
     META_MERGE => {
         resources => {
-            repository => {
-                type => 'git',
-                url  => 'https://github.com/Ovid/Test-Differences.git',
-                web  => 'https://github.com/Ovid/Test-Differences',
-            },
-            bugtracker => {
-                web => 'https://github.com/Ovid/Test-Differences/issues',
-            },
+            repository => 'https://github.com/Ovid/Test-Differences',
+            bugtracker => 'https://github.com/Ovid/Test-Differences/issues',
         },
     },
 );
