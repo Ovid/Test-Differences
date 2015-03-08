@@ -15,7 +15,7 @@ WriteMakefile(
     ABSTRACT_FROM => 'lib/Test/Differences.pm',
     PL_FILES      => {},
     PREREQ_PM     => {
-        'Test::More'    => 0,
+        'Test::More'    => '0.88', # done_testing
         'Text::Diff'    => 0.35,
         'Data::Dumper'  => 2.126,
         'Capture::Tiny' => 0.24,
