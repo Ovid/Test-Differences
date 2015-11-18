@@ -16,7 +16,7 @@ WriteMakefile(
     PL_FILES      => {},
     PREREQ_PM     => {
         'Test::More'    => '0.88', # done_testing
-        'Text::Diff'    => 0.35,
+        'Text::Diff'    => 1.43,
         'Data::Dumper'  => 2.126,
         'Capture::Tiny' => 0.24,
     },
