@@ -339,6 +339,7 @@ use Exporter;
 );
 
 use strict;
+use warnings;
 
 use Carp;
 use Text::Diff;
