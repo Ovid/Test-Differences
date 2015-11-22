@@ -2,13 +2,12 @@ use strict;
 use warnings;
 
 use Test::More;
-use Config;
 use Capture::Tiny qw(capture);
 
 END { done_testing(); }
 
 my($stdout, $stderr) = capture { system (
-    $Config{perlpath}, (map { "-I$_" } (@INC)),
+    $^X, (map { "-I$_" } (@INC)),
     't/script/default-headers'
 ) };
 
@@ -30,7 +29,7 @@ is(
 );
 
 ($stdout, $stderr) = capture { system (
-    $Config{perlpath}, (map { "-I$_" } (@INC)),
+    $^X, (map { "-I$_" } (@INC)),
     't/script/custom-headers'
 ) };
 
