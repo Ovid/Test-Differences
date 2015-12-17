@@ -571,7 +571,9 @@ option.
 
 =head1 LICENSE
 
-Copyright 2001-2008 Barrie Slaymaker, All Rights Reserved.
+Copyright Barrie Slaymaker, Curtis "Ovid" Poe, and David Cantrell.
+
+All Rights Reserved.
 
 You may use this software under the terms of the GNU public license, any
 version, or the Artistic license.

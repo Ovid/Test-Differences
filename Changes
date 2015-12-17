@@ -1,5 +1,9 @@
 Changes file for Test::Differences
 
+XXXX XXXXXXXXXXXXXXXXXXXXX
+    - Fix discrepancies in copyright notices (thanks to Christian Neukirchen
+      for pointing them out)
+
 0.64 Sun November 22, 2015
     - Bump dependency version for Text::Diff to avoid a buggy release
     - Make tests pass with relocation perl (see
