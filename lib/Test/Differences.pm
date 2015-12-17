@@ -575,8 +575,8 @@ Copyright Barrie Slaymaker, Curtis "Ovid" Poe, and David Cantrell.
 
 All Rights Reserved.
 
-You may use this software under the terms of the GNU public license, any
-version, or the Artistic license.
+You may use, distribute and modify this software under the terms of the GNU
+public license, any version, or the Artistic license.
 
 =cut
 
