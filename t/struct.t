@@ -1,5 +1,8 @@
-use Test::More;
+#!perl
 
+use strict;
+use warnings;
+use Test::More;
 use Test::Differences;
 
 ## This mind-bender submitted by Yves Orton <demerphq@hotmail.com>
