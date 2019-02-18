@@ -1,3 +1,5 @@
+#!perl
+
 use strict;
 use warnings;
 
@@ -49,4 +51,3 @@ is(
 ",
     "got expected error output"
 );
-
