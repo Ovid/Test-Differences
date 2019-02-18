@@ -8,7 +8,7 @@ Test::Differences - Test strings and data structures and show differences if not
 
 =head1 VERSION
 
-0.62
+0.64
 
 =head1 SYNOPSIS
 
