@@ -12,11 +12,10 @@ my($stdout, $stderr) = capture { system (
     $^X, (map { "-I$_" } (@INC)),
     't/script/default-headers'
 ) };
-
+$stderr =~ s/^\s+//; # see https://github.com/Ovid/Test-Differences/issues/15
 is(
     $stderr,
-"
-#   Failed test 'both the same'
+"#   Failed test 'both the same'
 #   at t/script/default-headers line 8.
 # +----+----------------+----------------+
 # | Elt|Got             |Expected        |
@@ -34,11 +33,10 @@ is(
     $^X, (map { "-I$_" } (@INC)),
     't/script/custom-headers'
 ) };
-
+$stderr =~ s/^\s+//;
 is(
     $stderr,
-"
-#   Failed test 'both the same'
+"#   Failed test 'both the same'
 #   at t/script/custom-headers line 8.
 # +----+----------------+----------------+
 # | Elt|Lard            |Chips           |
